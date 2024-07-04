@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login, register, logout, } from "./operations";
-import { currentOperation } from "../../redux/auth/operations";
+import { login, register, logout, refreshUser } from "./operations";
 
 const authSlice = createSlice({
     name: 'auth',
@@ -14,39 +13,36 @@ const authSlice = createSlice({
         isRefreshing: false,
     },
     extraReducers: builder => {
-        builder
-            .addCase(register.fulfilled, (state, { payload }) => {
-            state.user = payload.user;
-            state.token = payload.token;
-            state.isLoggedIn = true;
-            });
-        
-        builder
-            .addCase(login.fulfilled, (state, { payload }) => {
-            state.user = payload.user;
-            state.token = payload.token;
-            state.isLoggedIn = true;
-            });
-        
-        builder
-            .addCase(logout.fulfilled, (state) => {
-            state.user = {
-                name: null,
-                email:null,
-            }
-            state.token = null;
-            state.isLoggedIn = false;
-            });
-        
-        builder
-          .addCase(currentOperation.fulfilled, (state, { payload }) => {
-            state.user = payload.user;
-            state.token = payload.token;
-            state.isLoggedIn = true;
-          })
-          .addCase(currentOperation.rejected, (state) => {
-            state.token = null;
-          });
+      builder.addCase(register.fulfilled, (state, { payload }) => {
+        state.user = payload.user;
+        state.token = payload.token;
+        state.isLoggedIn = true;
+      });
+
+      builder.addCase(login.fulfilled, (state, { payload }) => {
+        state.user = payload.user;
+        state.token = payload.token;
+        state.isLoggedIn = true;
+      });
+
+      builder.addCase(logout.fulfilled, (state) => {
+        state.user = {
+          name: null,
+          email: null,
+        };
+        state.token = null;
+        state.isLoggedIn = false;
+      });
+
+      builder
+        .addCase(refreshUser.fulfilled, (state, { payload }) => {
+          state.user = payload.user;
+          state.token = payload.token;
+          state.isLoggedIn = true;
+        })
+        .addCase(refreshUser.rejected, (state) => {
+          state.token = null;
+        });
     }
 })
 

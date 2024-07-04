@@ -7,15 +7,16 @@ import AppBar from "../AppBar/AppBar";
 import LoginPage from "../../pages/LoginPage";
 import ContactsPage from "../../pages/ContactsPage";
 
-import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { currentOperation } from "../../redux/auth/operations";
+import { useEffect } from "react";
+import {refreshUser} from '../../redux/auth/operations'
 
 function App() {
-  const dispatch = useDispatch();
+
+  const dispatch = useDispatch(refreshUser);
   useEffect(() => {
-    dispatch(currentOperation());
-  }, [dispatch]);
+    dispatch(refreshUser());
+  },[dispatch])
 
   return (
     <>
