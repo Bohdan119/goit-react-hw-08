@@ -6,6 +6,8 @@ import RegistrationPage from '../../pages/RegistrationPage'
 import AppBar from "../AppBar/AppBar";
 import LoginPage from "../../pages/LoginPage";
 import ContactsPage from "../../pages/ContactsPage";
+import PrivateRoute from '../PrivateRoute/PrivateRoute'
+import RestrictedRoute from "../RestrictedRoute/RestrictedRoute";
 
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
@@ -24,9 +26,16 @@ function App() {
       <Suspense fallback={null}>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegistrationPage />} />
-          <Route path="/contacts" element={<ContactsPage />} />
+            
+            <Route element={<RestrictedRoute />}>
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegistrationPage />} />
+            </Route>
+          
+            <Route element={<PrivateRoute />}>
+              <Route path="/contacts" element={<ContactsPage />} />
+            </Route>
+
           <Route path="*" element={<div>404</div>} />
         </Routes>
       </Suspense>
