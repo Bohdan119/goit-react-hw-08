@@ -10,7 +10,7 @@ const RestrictedRoute = () => {
   }
 
   if (isLoggedIn && token) {
-    return <Navigate to="/" />;
+    return <Navigate to="/contacts" />;
   }
 
   return <Outlet />;
