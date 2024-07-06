@@ -50,27 +50,41 @@ export const logout = createAsyncThunk(
   }
 );
 
+// export const refreshUser = createAsyncThunk(
+//   "auth/refresh",
+//   async (_, { rejectWithValue, getState }) => {
+//     try {
+//       const { auth } = getState();
+//       setHeaderToken(auth.token);
+//       const { data } = await axios.get("users/current");
+//       setHeaderToken(data.token);
+//       return data;
+//     } catch (error) {
+//       clearHeaderToken();
+//       return rejectWithValue(error.message);
+//     }
+//   },
+
+
 export const refreshUser = createAsyncThunk(
   "auth/refresh",
   async (_, { rejectWithValue, getState }) => {
     try {
       const { auth } = getState();
+if(!auth.token) {
+return rejectWithValue('no token');
+}
       setHeaderToken(auth.token);
       const { data } = await axios.get("users/current");
-      setHeaderToken(data.token);
       return data;
     } catch (error) {
-      clearHeaderToken();
+    
       return rejectWithValue(error.message);
     }
   },
-  {
-    condition: (_, { getState }) => {
-      const { auth } = getState();
-      if (!auth.token) {
-        return false;
-      }
-    },
-  }
+  
 );
+
+
+
 
