@@ -1,9 +1,26 @@
-import PropTypes from 'prop-types'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from "../../redux/auth/selectors";
+import { logout } from "../../redux/auth/operations";
+import { useEffect, useState } from 'react';
+import {useNavigate} from 'react-router-dom'
 
-const UserMenu = ({ handleLogOut }) => {
-  const { name } = useSelector(selectUser)
+const UserMenu = () => {
+  const { name } = useSelector(selectUser);
+  const [redirect] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+    const handleLogOut = () => {
+      dispatch(logout());
+  };
+
+useEffect(() => {
+  if (redirect) {
+    navigate("/login");
+  }
+}, [redirect, navigate]);
+
+      
   return (
     <div>
       <p>Welcome, {name} </p>
@@ -12,8 +29,5 @@ const UserMenu = ({ handleLogOut }) => {
   );
 };
 
-UserMenu.propTypes = {
-  handleLogOut:PropTypes.func.isRequired,
-}
 
 export default UserMenu;

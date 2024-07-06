@@ -1,20 +1,13 @@
 import { Field, Formik, Form } from "formik";
 import { useId } from "react";
+import PropTypes from 'prop-types'
 
-const LoginForm = ({ submit }) => {
+const LoginForm = ({ handelSubmit } ) => {
   const passwordId = useId();
   const emailId = useId();
 
-  const handelSubmit = (values, actions) => {
-    submit(values);
-    actions.resetForm();
-    };
-
   return (
-      <Formik
-            initialValues={{ email: "", password: "" }}
-            onSubmit={handelSubmit}
-      >
+    <Formik initialValues={{ email: "", password: "" }} onSubmit={handelSubmit}>
       <Form>
         <label htmlFor="emailId">Email:</label>
         <Field name="email" id={emailId} />
@@ -27,5 +20,11 @@ const LoginForm = ({ submit }) => {
     </Formik>
   );
 };
+
+LoginForm.propTypes = {
+  handelSubmit: PropTypes.func.isRequired,
+}
+
+
 
 export default LoginForm;

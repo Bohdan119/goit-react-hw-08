@@ -1,16 +1,18 @@
 import { Field, Formik, Form } from "formik"
 import { useId } from 'react'
+import { useDispatch } from "react-redux";
+import { register } from "../../redux/auth/operations";
 
 
-const RegistrationForm = ({submit}) => {
+const RegistrationForm = () => {
     const nameId = useId();
     const emailId = useId();
     const passwordId = useId();
+    const dispatch = useDispatch();
 
-    const handelSubmit = (values,actions) => {
-        submit(values);
+    const handelSubmit = (values, actions) => {
+        dispatch(register(values))
         actions.resetForm()
-        
     }
 
 
