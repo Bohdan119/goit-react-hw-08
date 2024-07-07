@@ -6,7 +6,7 @@ import {useNavigate} from 'react-router-dom'
 
 const UserMenu = () => {
   const { name } = useSelector(selectUser);
-  const [redirect] = useState(false);
+  const [redirect, setRedirect] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -17,6 +17,7 @@ const UserMenu = () => {
 useEffect(() => {
   if (redirect) {
     navigate("/login");
+    setRedirect(true)
   }
 }, [redirect, navigate]);
 
