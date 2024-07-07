@@ -1,10 +1,17 @@
 import { Field, Formik, Form } from "formik";
 import { useId } from "react";
-import PropTypes from 'prop-types'
+import { login } from "../../redux/auth/operations";
+import { useDispatch } from "react-redux";
 
-const LoginForm = ({ handelSubmit } ) => {
+const LoginForm = () => {
   const passwordId = useId();
   const emailId = useId();
+  const dispatch = useDispatch();
+
+    const handelSubmit = (values, actions) => {
+      dispatch(login(values));
+      actions.resetForm();
+    };
 
   return (
     <Formik initialValues={{ email: "", password: "" }} onSubmit={handelSubmit}>
@@ -20,11 +27,5 @@ const LoginForm = ({ handelSubmit } ) => {
     </Formik>
   );
 };
-
-LoginForm.propTypes = {
-  handelSubmit: PropTypes.func.isRequired,
-}
-
-
 
 export default LoginForm;
